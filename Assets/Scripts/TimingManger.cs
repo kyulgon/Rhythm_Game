@@ -11,8 +11,12 @@ public class TimingManger : MonoBehaviour
     
     Vector2[] timingBoxs = null;
 
+    EffectManager theEffect;
+
     private void Start()
     {
+        theEffect = FindObjectOfType<EffectManager>();
+
         // 타이밍 박스 설정
         timingBoxs = new Vector2[timingRect.Length];
 
@@ -35,12 +39,18 @@ public class TimingManger : MonoBehaviour
                 {
                     boxNoteList[i].GetComponent<Note>().HideNote(); // HideNote함수 실행
                     boxNoteList.RemoveAt(i); // 리스트에서 제거
-                    Debug.Log("Hit" + x);
+
+                    if (x < timingBoxs.Length -1) // Bad를 빼고 애니메이션 실행
+                    {
+                        theEffect.NoteHitEffect();
+                    }
+
+                    theEffect.JudgementEffect(x); // 이펙트 연출
                     return;
                 }
             }
         }
 
-        Debug.Log("Miss");
+        theEffect.JudgementEffect(timingBoxs.Length); // timingBoxs의 배열 개수는 4이므로 length를 이용
     }
 }

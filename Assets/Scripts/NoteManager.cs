@@ -10,11 +10,13 @@ public class NoteManager : MonoBehaviour
     [SerializeField] Transform tfNoteApper = null; // 노트가 나타날 위치
     [SerializeField] GameObject goNote = null; // 노트를 담을 오브젝트
 
-    TimingManger theTimingManger; 
+    TimingManger theTimingManger;
+    EffectManager theEffectManager;
 
     private void Start()
     {
-        theTimingManger = GetComponent<TimingManger>();
+        theEffectManager = FindObjectOfType<EffectManager>();
+        theTimingManger = GetComponent<TimingManger>();        
     }
 
     private void Update()
@@ -34,6 +36,11 @@ public class NoteManager : MonoBehaviour
     {
         if(collision.CompareTag("Note"))
         {
+            if(collision.GetComponent<Note>().GetNoteFlag()) // 노트가 보여진 상태이면
+            {
+                theEffectManager.JudgementEffect(4); // Miss 띄움
+            }
+
             theTimingManger.boxNoteList.Remove(collision.gameObject);
             Destroy(collision.gameObject);
         }

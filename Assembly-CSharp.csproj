@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CenterFlame.cs" />
+    <Compile Include="Assets\Scripts\EffectManager.cs" />
     <Compile Include="Assets\Scripts\Note.cs" />
     <Compile Include="Assets\Scripts\NoteManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
