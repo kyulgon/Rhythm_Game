@@ -11,11 +11,13 @@ public class NoteManager : MonoBehaviour
 
     TimingManger theTimingManger;
     EffectManager theEffectManager;
+    ComboManger theComboManger;
 
     private void Start()
     {
         theEffectManager = FindObjectOfType<EffectManager>();
-        theTimingManger = GetComponent<TimingManger>();        
+        theComboManger = FindObjectOfType<ComboManger>();
+        theTimingManger = GetComponent<TimingManger>();
     }
 
     private void Update()
@@ -40,6 +42,7 @@ public class NoteManager : MonoBehaviour
             if(collision.GetComponent<Note>().GetNoteFlag()) // 노트가 보여진 상태이면
             {
                 theEffectManager.JudgementEffect(4); // Miss 띄움
+                theComboManger.ResetCombo(); // 콤보 초기화
             }
 
             theTimingManger.boxNoteList.Remove(collision.gameObject);

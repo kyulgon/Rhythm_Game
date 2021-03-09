@@ -12,10 +12,14 @@ public class TimingManger : MonoBehaviour
     Vector2[] timingBoxs = null;
 
     EffectManager theEffect;
+    ScoreManager theScoreManager;
+    ComboManger theComboManager;
 
     private void Start()
     {
         theEffect = FindObjectOfType<EffectManager>();
+        theScoreManager = FindObjectOfType<ScoreManager>();
+        theComboManager = FindObjectOfType<ComboManger>();
 
         // 타이밍 박스 설정
         timingBoxs = new Vector2[timingRect.Length];
@@ -44,13 +48,16 @@ public class TimingManger : MonoBehaviour
                     {
                         theEffect.NoteHitEffect();
                     }
-
                     theEffect.JudgementEffect(x); // 이펙트 연출
+
+
+                    theScoreManager.IncreasecScore(x); // 점수증가
                     return;
                 }
             }
         }
 
+        theComboManager.ResetCombo(); // 콤보 초기화
         theEffect.JudgementEffect(timingBoxs.Length); // timingBoxs의 배열 개수는 4이므로 length를 이용
     }
 }
