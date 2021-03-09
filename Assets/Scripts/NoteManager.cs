@@ -8,7 +8,6 @@ public class NoteManager : MonoBehaviour
     double currentTime = 0d; // 현재 시간
 
     [SerializeField] Transform tfNoteApper = null; // 노트가 나타날 위치
-    [SerializeField] GameObject goNote = null; // 노트를 담을 오브젝트
 
     TimingManger theTimingManger;
     EffectManager theEffectManager;
@@ -25,8 +24,10 @@ public class NoteManager : MonoBehaviour
 
         if(currentTime >= 60d / bpm) // 60/120이므로 0.5초에 한번씩
         {
-            GameObject t_note = Instantiate(goNote, tfNoteApper.position, Quaternion.identity);
-            t_note.transform.SetParent(this.transform); // SetPart자리에 노트 만듦
+            GameObject t_note = ObjectPool.instance.noteQueue.Dequeue(); // 큐값 가져옴
+            t_note.transform.position = tfNoteApper.position; // 적절한 위치값을 넣어줌
+            t_note.SetActive(true); // 활성화
+
             theTimingManger.boxNoteList.Add(t_note); // 리시트에 노트 저장
             currentTime = 60 / bpm; // bpm다시 계산
         }
@@ -42,7 +43,11 @@ public class NoteManager : MonoBehaviour
             }
 
             theTimingManger.boxNoteList.Remove(collision.gameObject);
-            Destroy(collision.gameObject);
+
+
+            ObjectPool.instance.noteQueue.Enqueue(collision.gameObject); // 큐 반납
+            collision.gameObject.SetActive(false);
+            
         }
     }
 }
