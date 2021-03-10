@@ -4,6 +4,26 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    // 이동
+    [SerializeField] float moveSpeed = 3;
+    Vector3 dir = new Vector3();
+    Vector3 destPos = new Vector3();
+
+    // 회전
+    [SerializeField] float spinSpeed = 270;
+    Vector3 rotDir = new Vector3();
+    Quaternion destRot = new Quaternion();
+
+    // 반동
+    [SerializeField] float recoilPosY = 0.25f; // 들썩거리게 만들기 위한 변수
+    [SerializeField] float recoilSpeed = 1.5f;
+
+    bool canMove = true;
+
+    // 큐브
+    [SerializeField] Transform fakeCube = null; // 가짜큐브를 먼저 돌려놓고 돌아간만큼의 값을 목표 회전값으로 삼음
+    [SerializeField] Transform realCube = null; // 회전시킬 객체
+
     TimingManger theTimingManger;
 
     private void Start()
@@ -13,9 +33,77 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space)) // 스페이를 누르면 CheckTiming함수 실행
+        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W))
         {
-            theTimingManger.CheckTiming();
+            if(canMove)
+            {
+                if (theTimingManger.CheckTiming())
+                {
+                    startAction();
+                }
+            }           
         }
     }
+
+    void startAction()
+    {
+        // 방향 계산
+        dir.Set(Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
+
+        // 이동 목표값 계산
+        destPos = transform.position + new Vector3(-dir.x, 0, dir.z);
+
+        // 회전 목표값 계산
+        rotDir = new Vector3(-dir.z, 0f, -dir.x);
+        fakeCube.RotateAround(transform.position, rotDir, spinSpeed); // RotateAround(공전대상, 회전축, 회전값) <편법 회전 구현>
+        destRot = fakeCube.rotation; 
+
+        StartCoroutine(MoveCoroutine());
+        StartCoroutine(SpinCoroutine());
+        StartCoroutine(RecoilCoroutine());
+
+    }
+
+    IEnumerator MoveCoroutine() // 움직임 코루틴
+    {
+        canMove = false;
+
+        while (Vector3.SqrMagnitude(transform.position - destPos) >= 0.001f) // 거리의 제곱근 값이 0.001값(같지 않으면)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, destPos, moveSpeed * Time.deltaTime); // destPos로 감
+            yield return null;
+        }
+
+        transform.position = destPos; // destPos값을 현재 값으로 설정
+        canMove = true;
+    }
+    
+    IEnumerator SpinCoroutine() // 스틴 코루틴
+    {
+        while(Quaternion.Angle(realCube.rotation, destRot) > 0.5f) // 진짜 큐브와 가짜큐브의 회전값이 차이가 있으면
+        {
+            realCube.rotation = Quaternion.RotateTowards(realCube.rotation, destRot, spinSpeed * Time.deltaTime); // 회전
+            yield return null;
+        }
+
+        realCube.rotation = destRot; // 진짜큐브 회전 값 재설정
+    }
+
+    IEnumerator RecoilCoroutine() // 들썩거림 구현
+    {
+        while(realCube.position.y < recoilPosY) // 큐브 뛰어오름
+        {
+            realCube.position += new Vector3(0, recoilSpeed * Time.deltaTime, 0);
+            yield return null;
+        }
+
+        while(realCube.position.y > 0) // 큐브 떨어짐
+        {
+            realCube.position -= new Vector3(0, recoilSpeed * Time.deltaTime, 0);
+            yield return null;
+        }
+
+        realCube.localPosition = new Vector3(0, 0, 0); // 위치 초기화
+    }
+
 }

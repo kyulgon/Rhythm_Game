@@ -31,9 +31,9 @@ public class TimingManger : MonoBehaviour
         }
     }
 
-    public void CheckTiming()
+    public bool CheckTiming()
     {
-        for (int i = 0; i < boxNoteList.Count; i++) // 리시트에 있는 모든 노트 호가인
+        for (int i = 0; i < boxNoteList.Count; i++) // 리시트에 있는 모든 노트 확인
         {
             float t_tnoePosX = boxNoteList[i].transform.localPosition.x; // 모든 노트의 x좌표를 t_tonePosX에 저장
 
@@ -52,12 +52,13 @@ public class TimingManger : MonoBehaviour
 
 
                     theScoreManager.IncreasecScore(x); // 점수증가
-                    return;
+                    return true;
                 }
             }
         }
 
         theComboManager.ResetCombo(); // 콤보 초기화
         theEffect.JudgementEffect(timingBoxs.Length); // timingBoxs의 배열 개수는 4이므로 length를 이용
+        return false;
     }
 }
