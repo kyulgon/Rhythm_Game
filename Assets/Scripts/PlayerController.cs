@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     // 이동
     [SerializeField] float moveSpeed = 3;
     Vector3 dir = new Vector3();
-    Vector3 destPos = new Vector3();
+    public Vector3 destPos = new Vector3();
 
     // 회전
     [SerializeField] float spinSpeed = 270;
@@ -25,10 +25,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform realCube = null; // 회전시킬 객체
 
     TimingManger theTimingManger;
+    CameraController theCam;
 
     private void Start()
     {
         theTimingManger = FindObjectOfType<TimingManger>();
+        theCam = FindObjectOfType<CameraController>();
     }
 
     void Update()
@@ -37,6 +39,8 @@ public class PlayerController : MonoBehaviour
         {
             if(canMove)
             {
+                Calc();
+
                 if (theTimingManger.CheckTiming())
                 {
                     startAction();
@@ -45,7 +49,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void startAction()
+    void Calc()
     {
         // 방향 계산
         dir.Set(Input.GetAxisRaw("Vertical"), 0, Input.GetAxisRaw("Horizontal"));
@@ -56,11 +60,15 @@ public class PlayerController : MonoBehaviour
         // 회전 목표값 계산
         rotDir = new Vector3(-dir.z, 0f, -dir.x);
         fakeCube.RotateAround(transform.position, rotDir, spinSpeed); // RotateAround(공전대상, 회전축, 회전값) <편법 회전 구현>
-        destRot = fakeCube.rotation; 
+        destRot = fakeCube.rotation;
+    }
 
+    void startAction()
+    {
         StartCoroutine(MoveCoroutine());
         StartCoroutine(SpinCoroutine());
         StartCoroutine(RecoilCoroutine());
+        StartCoroutine(theCam.ZoomCam());
 
     }
 

@@ -14,12 +14,16 @@ public class TimingManger : MonoBehaviour
     EffectManager theEffect;
     ScoreManager theScoreManager;
     ComboManger theComboManager;
+    StageManager theStageManager;
+    PlayerController thePlayer;
 
     private void Start()
     {
         theEffect = FindObjectOfType<EffectManager>();
         theScoreManager = FindObjectOfType<ScoreManager>();
         theComboManager = FindObjectOfType<ComboManger>();
+        theStageManager = FindObjectOfType<StageManager>();
+        thePlayer = FindObjectOfType<PlayerController>();
 
         // 타이밍 박스 설정
         timingBoxs = new Vector2[timingRect.Length];
@@ -47,11 +51,19 @@ public class TimingManger : MonoBehaviour
                     if (x < timingBoxs.Length -1) // Bad를 빼고 애니메이션 실행
                     {
                         theEffect.NoteHitEffect();
+                    }                                                       
+
+                    if(CheckCanNextPlate()) // 다음 발판 확인
+                    {
+                        theScoreManager.IncreasecScore(x); // 점수증가
+                        theStageManager.ShowNextPlate(); // 발판 생성
+                        theEffect.JudgementEffect(x); // 이펙트 연출 
                     }
-                    theEffect.JudgementEffect(x); // 이펙트 연출
-
-
-                    theScoreManager.IncreasecScore(x); // 점수증가
+                    else
+                    {
+                        theEffect.JudgementEffect(5); // normal 이팩트
+                    }
+                    
                     return true;
                 }
             }
@@ -59,6 +71,24 @@ public class TimingManger : MonoBehaviour
 
         theComboManager.ResetCombo(); // 콤보 초기화
         theEffect.JudgementEffect(timingBoxs.Length); // timingBoxs의 배열 개수는 4이므로 length를 이용
+        return false;
+    }
+
+    bool CheckCanNextPlate() // 다음 발판이 가능한지
+    {
+        if (Physics.Raycast(thePlayer.destPos, Vector3.down, out RaycastHit t_hitInfo, 1.1f)) // 레이케이트를 쏴서
+        {
+            if(t_hitInfo.transform.CompareTag("BasicPlate")) // 태그가 BasicPlate이면
+            {
+                BasicPlate t_plate = t_hitInfo.transform.GetComponent<BasicPlate>(); // t_plate에 t_hitInfo를 넣어줌
+                if(t_plate.flage)// t_plateflage가 true이면
+                {
+                    t_plate.flage = false; // false로 바꾸고 리턴
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 }
