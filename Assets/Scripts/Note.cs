@@ -35,4 +35,5 @@ public class Note : MonoBehaviour
     {
         return noteImage.enabled;
     }
+
 }

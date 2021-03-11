@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static bool s_canPresskey = true; // 죽으면 이동불가능하게 만들 bool 변수
+
     // 이동
     [SerializeField] float moveSpeed = 3;
     Vector3 dir = new Vector3();
@@ -37,7 +39,7 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W))
         {
-            if(canMove)
+            if(canMove && s_canPresskey) // 움직일수 있거나 누를수 있으면
             {
                 Calc();
 
