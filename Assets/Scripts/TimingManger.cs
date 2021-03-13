@@ -6,6 +6,8 @@ public class TimingManger : MonoBehaviour
 {
     public List<GameObject> boxNoteList = new List<GameObject>(); // 리스트로 노트저장
 
+    int[] judgementRecord = new int[5]; // 판정기록 변수
+
     [SerializeField] Transform Center = null; // 센터 위치
     [SerializeField] RectTransform[] timingRect = null; // 타이밍 구간 배열
     
@@ -58,6 +60,8 @@ public class TimingManger : MonoBehaviour
                         theScoreManager.IncreasecScore(x); // 점수증가
                         theStageManager.ShowNextPlate(); // 발판 생성
                         theEffect.JudgementEffect(x); // 이펙트 연출 
+
+                        judgementRecord[x]++; // 판정기록
                     }
                     else
                     {
@@ -71,6 +75,7 @@ public class TimingManger : MonoBehaviour
 
         theComboManager.ResetCombo(); // 콤보 초기화
         theEffect.JudgementEffect(timingBoxs.Length); // timingBoxs의 배열 개수는 4이므로 length를 이용
+        MissRecord();
         return false;
     }
 
@@ -90,5 +95,15 @@ public class TimingManger : MonoBehaviour
         }
 
         return false;
+    }
+
+    public int[] GetJudgementRecord()
+    {
+        return judgementRecord;
+    }
+
+    public void MissRecord()
+    {
+        judgementRecord[4]++; // 판정기록
     }
 }

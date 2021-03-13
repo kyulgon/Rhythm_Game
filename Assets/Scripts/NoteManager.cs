@@ -46,6 +46,7 @@ public class NoteManager : MonoBehaviour
         {
             if(collision.GetComponent<Note>().GetNoteFlag()) // 노트가 보여진 상태이면
             {
+                theTimingManger.MissRecord();
                 theEffectManager.JudgementEffect(4); // Miss 띄움
                 theComboManger.ResetCombo(); // 콤보 초기화
             }

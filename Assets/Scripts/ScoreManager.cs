@@ -46,4 +46,8 @@ public class ScoreManager : MonoBehaviour
         myAnim.SetTrigger(animScoreUp); // 애니메이션 실행
     }
 
+    public int GeteCurrentScore()
+    {
+        return currentScore;
+    }
 }

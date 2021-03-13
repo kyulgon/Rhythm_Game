@@ -9,6 +9,7 @@ public class ComboManger : MonoBehaviour
     [SerializeField] Text txtCombo = null;
 
     int currentCombo = 0;
+    int maxCombo = 0;
 
     Animator myAnimator;
     string animComboUp = "ComboUp";
@@ -26,6 +27,11 @@ public class ComboManger : MonoBehaviour
     {
         currentCombo += p_num;
         txtCombo.text = string.Format("{0:#,##0}", currentCombo); // 텍스트 포멧 설정
+
+        if(maxCombo < currentCombo) // max콤보 바꾸기
+        {
+            maxCombo = currentCombo;
+        }
 
         if(currentCombo > 2) // 3콤보부터 보이기
         {
@@ -46,7 +52,11 @@ public class ComboManger : MonoBehaviour
         currentCombo = 0;
         txtCombo.text = "0";
         txtCombo.gameObject.SetActive(false);
-        goCombooImage.SetActive(false);
-        
+        goCombooImage.SetActive(false);        
+    }
+
+    public int GetMaxCombo()
+    {
+        return maxCombo;
     }
 }
