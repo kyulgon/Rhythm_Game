@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed = 3;
     Vector3 dir = new Vector3();
     public Vector3 destPos = new Vector3();
+    Vector3 originPos = new Vector3();
 
     // 회전
     [SerializeField] float spinSpeed = 270;
@@ -20,7 +21,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float recoilPosY = 0.25f; // 들썩거리게 만들기 위한 변수
     [SerializeField] float recoilSpeed = 1.5f;
 
-    bool canMove = true;
+    bool canMove = true;  // 움직임 여부
+    bool isFalling = false; // 추락 여부
+
 
     // 큐브
     [SerializeField] Transform fakeCube = null; // 가짜큐브를 먼저 돌려놓고 돌아간만큼의 값을 목표 회전값으로 삼음
@@ -28,18 +31,23 @@ public class PlayerController : MonoBehaviour
 
     TimingManger theTimingManger;
     CameraController theCam;
+    Rigidbody myRigid;
 
     private void Start()
     {
         theTimingManger = FindObjectOfType<TimingManger>();
         theCam = FindObjectOfType<CameraController>();
+        myRigid = GetComponentInChildren<Rigidbody>();
+        originPos = transform.position;
     }
 
     void Update()
     {
+        CheckFalling();
+
         if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W))
         {
-            if(canMove && s_canPresskey) // 움직일수 있거나 누를수 있으면
+            if(canMove && s_canPresskey && !isFalling) // 움직일수 있거나 누를수 있으면
             {
                 Calc();
 
@@ -114,6 +122,34 @@ public class PlayerController : MonoBehaviour
         }
 
         realCube.localPosition = new Vector3(0, 0, 0); // 위치 초기화
+    }
+
+    void CheckFalling() // 추락 구현
+    {
+        if(!isFalling && canMove)
+        {
+            if (!Physics.Raycast(transform.position, Vector3.down, 1.1f))
+            {
+                Falling();
+            }
+        }       
+    }
+
+    void Falling()
+    {
+        isFalling = true;
+        myRigid.useGravity = true;
+        myRigid.isKinematic = false;
+    }
+
+    public void ResetFalling() // 추락 전으로 돌리기
+    {
+        isFalling = false;
+        myRigid.useGravity = false;
+        myRigid.isKinematic = true;
+
+        transform.position = originPos; // 원래 위치로 바꿈
+        realCube.localPosition = new Vector3(0, 0, 0); // 자식오브젝트로 원위치
     }
 
 }

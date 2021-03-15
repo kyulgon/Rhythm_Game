@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\CenterFlame.cs" />
     <Compile Include="Assets\Scripts\ComboManger.cs" />
+    <Compile Include="Assets\Scripts\DeadZone.cs" />
     <Compile Include="Assets\Scripts\EffectManager.cs" />
     <Compile Include="Assets\Scripts\GoalPlate.cs" />
     <Compile Include="Assets\Scripts\Note.cs" />
