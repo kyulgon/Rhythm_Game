@@ -18,14 +18,18 @@ public class TimingManger : MonoBehaviour
     ComboManger theComboManager;
     StageManager theStageManager;
     PlayerController thePlayer;
+    StatusManager theStatusManger;
+    AudioManager theAudioManger;
 
     private void Start()
     {
+        theAudioManger = AudioManager.instance;
         theEffect = FindObjectOfType<EffectManager>();
         theScoreManager = FindObjectOfType<ScoreManager>();
         theComboManager = FindObjectOfType<ComboManger>();
         theStageManager = FindObjectOfType<StageManager>();
         thePlayer = FindObjectOfType<PlayerController>();
+        theStatusManger = FindObjectOfType<StatusManager>();
 
         // 타이밍 박스 설정
         timingBoxs = new Vector2[timingRect.Length];
@@ -62,11 +66,14 @@ public class TimingManger : MonoBehaviour
                         theEffect.JudgementEffect(x); // 이펙트 연출 
 
                         judgementRecord[x]++; // 판정기록
+                        theStatusManger.CheckShield(); // 쉴드 체크
                     }
                     else
                     {
                         theEffect.JudgementEffect(5); // normal 이팩트
                     }
+
+                    theAudioManger.PlaySFX("Clap"); // 박수 클립 실행
                     
                     return true;
                 }
@@ -105,5 +112,6 @@ public class TimingManger : MonoBehaviour
     public void MissRecord()
     {
         judgementRecord[4]++; // 판정기록
+        theStatusManger.ResetShieldCombo(); // 쉴드콤보 리셋
     }
 }

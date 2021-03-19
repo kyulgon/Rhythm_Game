@@ -32,12 +32,14 @@ public class PlayerController : MonoBehaviour
     TimingManger theTimingManger;
     CameraController theCam;
     Rigidbody myRigid;
+    StatusManager theStatus;
 
     private void Start()
     {
         theTimingManger = FindObjectOfType<TimingManger>();
         theCam = FindObjectOfType<CameraController>();
         myRigid = GetComponentInChildren<Rigidbody>();
+        theStatus = FindObjectOfType<StatusManager>();
         originPos = transform.position;
     }
 
@@ -144,12 +146,20 @@ public class PlayerController : MonoBehaviour
 
     public void ResetFalling() // 추락 전으로 돌리기
     {
-        isFalling = false;
-        myRigid.useGravity = false;
-        myRigid.isKinematic = true;
+        theStatus.DecreaseHP(1); // 체력 1 감소
+        AudioManager.instance.PlaySFX("Falling");
 
-        transform.position = originPos; // 원래 위치로 바꿈
-        realCube.localPosition = new Vector3(0, 0, 0); // 자식오브젝트로 원위치
+        if(!theStatus.IsDead()) // 플레이어가 죽지 않았으면
+        {
+            isFalling = false;
+            myRigid.useGravity = false;
+            myRigid.isKinematic = true;
+
+            transform.position = originPos; // 원래 위치로 바꿈
+            realCube.localPosition = new Vector3(0, 0, 0); // 자식오브젝트로 원위치
+        }
+
+       
     }
 
 }
