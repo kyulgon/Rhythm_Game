@@ -7,8 +7,6 @@ public class NoteManager : MonoBehaviour
     public int bpm = 0; // 분당 비트 나올 수
     double currentTime = 0d; // 현재 시간
 
-    bool noteActive = true;
-
     [SerializeField] Transform tfNoteApper = null; // 노트가 나타날 위치
     
     TimingManger theTimingManger;
@@ -24,7 +22,7 @@ public class NoteManager : MonoBehaviour
 
     private void Update()
     {
-        if(noteActive)
+        if(GameManager.instance.isStartGame)
         {
             currentTime += Time.deltaTime; // 1초에 1씩 증가
 
@@ -62,7 +60,7 @@ public class NoteManager : MonoBehaviour
 
     public void RemoveNote() // 노트를 지워주는 메서드
     {
-        noteActive = false;
+        GameManager.instance.isStartGame = false;
 
         for (int i = 0; i < theTimingManger.boxNoteList.Count; i++)
         {

@@ -71,6 +71,7 @@
     <Compile Include="Assets\Scripts\ComboManger.cs" />
     <Compile Include="Assets\Scripts\DeadZone.cs" />
     <Compile Include="Assets\Scripts\EffectManager.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GoalPlate.cs" />
     <Compile Include="Assets\Scripts\Note.cs" />
     <Compile Include="Assets\Scripts\NoteManager.cs" />
@@ -80,8 +81,10 @@
     <Compile Include="Assets\Scripts\ScoreManager.cs" />
     <Compile Include="Assets\Scripts\Stage.cs" />
     <Compile Include="Assets\Scripts\StageManager.cs" />
+    <Compile Include="Assets\Scripts\StageMenu.cs" />
     <Compile Include="Assets\Scripts\StatusManager.cs" />
     <Compile Include="Assets\Scripts\TimingManger.cs" />
+    <Compile Include="Assets\Scripts\TitleMenu.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/GitHub_portfolio/12. Rhythm_Game/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

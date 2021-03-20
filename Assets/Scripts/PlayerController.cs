@@ -45,20 +45,25 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        CheckFalling();
-
-        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W))
+        if(GameManager.instance.isStartGame) // isStartGame이 true일 때만 실행
         {
-            if(canMove && s_canPresskey && !isFalling) // 움직일수 있거나 누를수 있으면
-            {
-                Calc();
+            CheckFalling();
 
-                if (theTimingManger.CheckTiming())
+            if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W))
+            {
+                if (canMove && s_canPresskey && !isFalling) // 움직일수 있거나 누를수 있으면
                 {
-                    startAction();
+                    Calc();
+
+                    if (theTimingManger.CheckTiming())
+                    {
+                        startAction();
+                    }
                 }
-            }           
+            }
         }
+
+       
     }
 
     void Calc()
