@@ -48,12 +48,14 @@ public class AudioManager : MonoBehaviour
         {
             if (p_sfxName == sfx[i].name) // 이름이 같으면
             {
-                for (int x = 0; x < sfxPlayer.Length; x++) // 비어있는 Player 찾기
+                for (int x = 0; x < sfxPlayer.Length; x++) // sfx플레이어 수 만큼
                 {
-                    sfxPlayer[x].clip = sfx[i].clip;
-                    sfxPlayer[x].Play();
-
-                    return;
+                    if(!sfxPlayer[x].isPlaying) // sfx플레이어가 실행되지 않으면
+                    {
+                        sfxPlayer[x].clip = sfx[i].clip; // 클립을 넣어줌
+                        sfxPlayer[x].Play();
+                        return;
+                    }
                 }
 
                 Debug.Log("모든 오디오 플레이어가 재생중입니다.");

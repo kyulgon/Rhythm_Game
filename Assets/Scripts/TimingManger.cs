@@ -73,7 +73,7 @@ public class TimingManger : MonoBehaviour
                         theEffect.JudgementEffect(5); // normal 이팩트
                     }
 
-                    theAudioManger.PlaySFX("Clap"); // 박수 클립 실행
+                   AudioManager.instance.PlaySFX("Clap");
                     
                     return true;
                 }

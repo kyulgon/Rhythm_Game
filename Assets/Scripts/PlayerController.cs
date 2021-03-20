@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.W))
             {
                 if (canMove && s_canPresskey && !isFalling) // 움직일수 있거나 누를수 있으면
-                {
+                {                    
                     Calc();
 
                     if (theTimingManger.CheckTiming())
@@ -61,9 +61,7 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-        }
-
-       
+        }       
     }
 
     void Calc()
@@ -103,7 +101,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
     
-    IEnumerator SpinCoroutine() // 스틴 코루틴
+    IEnumerator SpinCoroutine() // 스핀 코루틴
     {
         while(Quaternion.Angle(realCube.rotation, destRot) > 0.5f) // 진짜 큐브와 가짜큐브의 회전값이 차이가 있으면
         {
@@ -154,7 +152,7 @@ public class PlayerController : MonoBehaviour
         theStatus.DecreaseHP(1); // 체력 1 감소
         AudioManager.instance.PlaySFX("Falling");
 
-        if(!theStatus.IsDead()) // 플레이어가 죽지 않았으면
+        if (!theStatus.IsDead()) // 플레이어가 죽지 않았으면
         {
             isFalling = false;
             myRigid.useGravity = false;

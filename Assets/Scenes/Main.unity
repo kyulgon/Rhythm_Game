@@ -1666,8 +1666,8 @@ RectTransform:
   - {fileID: 855477474}
   - {fileID: 1090961682}
   - {fileID: 1773397528}
-  - {fileID: 2021302374}
   - {fileID: 1715441938}
+  - {fileID: 2021302374}
   m_Father: {fileID: 1366092535}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7664,7 +7664,7 @@ RectTransform:
   m_Children:
   - {fileID: 1638765255}
   m_Father: {fileID: 404939128}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -7725,7 +7725,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1715441941}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 875820386}
+        m_MethodName: MainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1715441941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8663,7 +8674,7 @@ RectTransform:
   m_Children:
   - {fileID: 1561632434}
   m_Father: {fileID: 404939128}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8724,18 +8735,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2021302377}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1011069819}
-        m_MethodName: BtnMainMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &2021302377
 MonoBehaviour:
   m_ObjectHideFlags: 0
