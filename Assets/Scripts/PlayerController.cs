@@ -43,6 +43,18 @@ public class PlayerController : MonoBehaviour
         originPos = transform.position;
     }
 
+    public void Initialized()
+    {
+        transform.position = Vector3.zero;
+        destPos = Vector3.zero;
+        realCube.localPosition = Vector3.zero;
+        canMove = true;
+        s_canPresskey = true;
+        isFalling = false;
+        myRigid.useGravity = false;
+        myRigid.isKinematic = true;
+    }
+
     void Update()
     {
         if(GameManager.instance.isStartGame) // isStartGame이 true일 때만 실행
@@ -84,7 +96,6 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(SpinCoroutine());
         StartCoroutine(RecoilCoroutine());
         StartCoroutine(theCam.ZoomCam());
-
     }
 
     IEnumerator MoveCoroutine() // 움직임 코루틴

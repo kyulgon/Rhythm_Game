@@ -6,6 +6,7 @@ public class StageManager : MonoBehaviour
 {
     [SerializeField] GameObject stage = null; // 스테이지 변수
     Transform[] stagePlates; // 발판 배열
+    GameObject currentStage; // 현재 스테이지
 
     // 발판 효과
     [SerializeField] float offsetY = -3;
@@ -14,9 +15,20 @@ public class StageManager : MonoBehaviour
     int stepCount = 0; // 발판 효과를 위한 카운트
     int totalPlateCount = 0; // 총 발판 수
     
-    void Start()
+    public void RemoveStage() // 스테이지 지우기
     {
-        stagePlates = stage.GetComponent<Stage>().plates;
+        if(currentStage != null)
+        {
+            Destroy(currentStage);
+        }
+    }
+
+    public void SettingStage()
+    {
+        stepCount = 0;
+
+        currentStage = Instantiate(stage, Vector3.zero, Quaternion.identity);
+        stagePlates = currentStage.GetComponent<Stage>().plates;
         totalPlateCount = stagePlates.Length;
 
         for (int i = 0; i < totalPlateCount; i++)

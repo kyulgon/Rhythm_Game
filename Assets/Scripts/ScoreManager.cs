@@ -28,6 +28,12 @@ public class ScoreManager : MonoBehaviour
         txtScore.text = "0";
     }
 
+    public void Initialized() // 점수 초기화
+    {
+        currentScore = 0;
+        txtScore.text = "0";
+    }
+
     public void IncreasecScore(int p_JudgementState) // 점수 증가 메서드
     {
         theCombo.IncreaseCombo(); // 콤보 증가

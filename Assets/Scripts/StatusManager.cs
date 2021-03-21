@@ -36,6 +36,18 @@ public class StatusManager : MonoBehaviour
         theNote = FindObjectOfType<NoteManager>();
     }
 
+    public void Initialized()
+    {
+        currentHp = maxHp;
+        currentShield = 0;
+        currentShieldCombo = 0;
+        shieldGauge.fillAmount = 0;
+        isDead = false;
+        SettingHPImage();
+        SettingShieldImage();
+    }
+
+
     public void CheckShield() // 쉴드 체크
     {
         currentShieldCombo++; // 쉴드 콤보 증가

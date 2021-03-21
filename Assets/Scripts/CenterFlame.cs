@@ -6,6 +6,12 @@ public class CenterFlame : MonoBehaviour
 {
     bool musicStart = false; // 노래가 틀어져있는지 확인할 변수
 
+    public string bgmName = "";
+
+    public void ResetMusic() // 음악 리셋
+    {
+        musicStart = false;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision) // music 트리거 설정
     {
@@ -13,7 +19,7 @@ public class CenterFlame : MonoBehaviour
         {
             if (collision.CompareTag("Note")) // 태그가 NOte이면
             {
-                AudioManager.instance.PlayBGM("BGM0");
+                AudioManager.instance.PlayBGM(bgmName);
                 musicStart = true;
             }
         }

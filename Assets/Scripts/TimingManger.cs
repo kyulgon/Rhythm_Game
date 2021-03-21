@@ -114,4 +114,13 @@ public class TimingManger : MonoBehaviour
         judgementRecord[4]++; // 판정기록
         theStatusManger.ResetShieldCombo(); // 쉴드콤보 리셋
     }
+
+    public void Initialized()
+    {
+        judgementRecord[0] = 0;
+        judgementRecord[1] = 0;
+        judgementRecord[2] = 0;
+        judgementRecord[3] = 0;
+        judgementRecord[4] = 0;
+    }
 }
