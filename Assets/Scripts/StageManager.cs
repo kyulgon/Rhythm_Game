@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StageManager : MonoBehaviour
 {
-    [SerializeField] GameObject stage = null; // 스테이지 변수
+    [SerializeField] GameObject[] stageArray = null; // 스테이지 변수
     Transform[] stagePlates; // 발판 배열
     GameObject currentStage; // 현재 스테이지
 
@@ -14,7 +14,7 @@ public class StageManager : MonoBehaviour
 
     int stepCount = 0; // 발판 효과를 위한 카운트
     int totalPlateCount = 0; // 총 발판 수
-    
+
     public void RemoveStage() // 스테이지 지우기
     {
         if(currentStage != null)
@@ -23,11 +23,11 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    public void SettingStage()
+    public void SettingStage(int p_songNum)
     {
         stepCount = 0;
 
-        currentStage = Instantiate(stage, Vector3.zero, Quaternion.identity);
+        currentStage = Instantiate(stageArray[p_songNum], Vector3.zero, Quaternion.identity);
         stagePlates = currentStage.GetComponent<Stage>().plates;
         totalPlateCount = stagePlates.Length;
 
